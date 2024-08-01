@@ -23,13 +23,9 @@ contract CounterTest is Test {
 
         attackKing = new AttackKing(payable(address(king)));
 
-        
-
         deal(NewOwner, 1 ether);
 
         deal(address(attackKing), 1 ether);
-        
-
 
     }
 
